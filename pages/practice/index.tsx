@@ -30,7 +30,7 @@ const PracticePageForm: React.FC = () => {
     setName('');
   };
 
- const clearQueue = (setQueue: React.Dispatch<React.SetStateAction<QueueItem[]>>) => {
+ const handleQueue = (setQueue: React.Dispatch<React.SetStateAction<QueueItem[]>>) => {
     setQueue(prevQueue => {
       if (prevQueue.length > 0) {
         return prevQueue.slice(1);
@@ -38,21 +38,9 @@ const PracticePageForm: React.FC = () => {
       return prevQueue;
     });
   }; 
-  const getTotalQueue = () => {
-    return cashier1.length + cashier2.length + cashier3.length;
-  };
-  const getRemainingQueueMessage = () => {
-    const remaining = 3 - getTotalQueue();
-    if (remaining === 0) {
-      return null;
-    } else if (remaining === 1) {
-      return `1 more queue`;
-    } else {
-      return `${remaining} more queues`;
-    }
-  };
+
   const submitToQueue = () => {
-    const randomNumber = Math.floor(Math.random() * 3) + 1;\
+    const randomNumber = Math.floor(Math.random() * 3) + 1;
 
     switch (randomNumber) {
       case 1:
@@ -90,7 +78,7 @@ const PracticePageForm: React.FC = () => {
             bordered
             title={() => 'Cashier 1 Queue'}
             footer={() => (
-              <Button onClick={() => clearQueue(setCashier1)}>Handle Queue</Button>
+              <Button onClick={() => handleQueue(setCashier1)}>Handle Queue</Button>
             )}
           />
         </Col>
@@ -103,9 +91,7 @@ const PracticePageForm: React.FC = () => {
             title={() => 'Cashier 2 Queue'}
             footer={() => (
               <Space>
-            {getRemainingQueueMessage() && <p style={{ color: 'orange' }}>{getRemainingQueueMessage()}</p>}
-
-            <Button onClick={() => clearQueue(setCashier2)}>Handle Queue</Button>
+            <Button onClick={() => handleQueue(setCashier2)}>Handle Queue</Button>
             </Space>
             )}
             
@@ -119,7 +105,7 @@ const PracticePageForm: React.FC = () => {
             bordered
             title={() => 'Cashier 3 Queue'}
             footer={() => (
-              <Button onClick={() => clearQueue(setCashier3)}>Handle Queue</Button>
+              <Button onClick={() => handleQueue(setCashier3)}>Handle Queue</Button>
             )}
           />
         </Col>
