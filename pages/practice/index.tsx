@@ -10,7 +10,13 @@ const PracticePage : Page = () => {
   </>
   
 }
-
+ const columns = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+    },
+  ];
 const PracticePageForm: React.FC = () => {
   const [name, setName] = useState<string>('');
   const [cashier1, setCashier1] = useState<QueueItem[]>([]);
@@ -30,7 +36,7 @@ const PracticePageForm: React.FC = () => {
     setName('');
   };
 
- const handleQueue = (setQueue: React.Dispatch<React.SetStateAction<QueueItem[]>>) => {
+ const clearQueue = (setQueue: React.Dispatch<React.SetStateAction<QueueItem[]>>) => {
     setQueue(prevQueue => {
       if (prevQueue.length > 0) {
         return prevQueue.slice(1);
@@ -39,6 +45,17 @@ const PracticePageForm: React.FC = () => {
     });
   }; 
 
+  const remainingQueue = (queue: QueueItem[]) => {
+    const maxQueue = 3;
+    const remaining = queue.length - maxQueue;
+    if (queue.length <= 3){
+      return;
+    }
+    else if (remaining) {
+      return `${remaining} more queue`  ;
+    }
+    return;
+  };
   const submitToQueue = () => {
     const randomNumber = Math.floor(Math.random() * 3) + 1;
 
@@ -57,13 +74,7 @@ const PracticePageForm: React.FC = () => {
     }
   };
 
-  const columns = [
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-    },
-  ];
+ 
 
   return (
     <Space style={{display : "flex" }} direction='vertical' size={"middle"} >
@@ -72,26 +83,31 @@ const PracticePageForm: React.FC = () => {
       <Row gutter={[16, 16]}>
         <Col span={8}>
           <Table
-            dataSource={cashier1}
+            dataSource={cashier1.slice(0,3)}
             columns={columns}
             pagination={false}
             bordered
             title={() => 'Cashier 1 Queue'}
             footer={() => (
-              <Button onClick={() => handleQueue(setCashier1)}>Handle Queue</Button>
+              <Space>
+              <Button onClick={() => clearQueue(setCashier1)}>Handle Queue</Button>
+              {remainingQueue(cashier1) && <p className='text-red-600'>{remainingQueue(cashier1)}</p>}
+              </Space>
             )}
           />
         </Col>
         <Col span={8}>
           <Table
-            dataSource={cashier2}
+            dataSource={cashier2.slice(0,3)}
             columns={columns}
             pagination={false}
             bordered
             title={() => 'Cashier 2 Queue'}
             footer={() => (
               <Space>
-            <Button onClick={() => handleQueue(setCashier2)}>Handle Queue</Button>
+            <Button onClick={() => clearQueue(setCashier2)}>Handle Queue</Button>
+            {remainingQueue(cashier2) && <p className='text-red-600'>{remainingQueue(cashier2)}</p>}
+
             </Space>
             )}
             
@@ -99,13 +115,16 @@ const PracticePageForm: React.FC = () => {
         </Col>
         <Col span={8}>
           <Table
-            dataSource={cashier3}
+            dataSource={cashier3.slice(0,3)}
             columns={columns}
             pagination={false}
             bordered
             title={() => 'Cashier 3 Queue'}
             footer={() => (
-              <Button onClick={() => handleQueue(setCashier3)}>Handle Queue</Button>
+              <Space>
+              <Button onClick={() => clearQueue(setCashier3)}>Handle Queue</Button>
+              {remainingQueue(cashier3) && <p className='text-red-600'>{remainingQueue(cashier3)}</p>}
+              </Space>
             )}
           />
         </Col>
