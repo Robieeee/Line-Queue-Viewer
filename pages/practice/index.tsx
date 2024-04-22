@@ -10,13 +10,15 @@ const PracticePage : Page = () => {
   </>
   
 }
- const columns = [
+
+const columns = [
     {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
     },
-  ];
+];
+
 const PracticePageForm: React.FC = () => {
   const [name, setName] = useState<string>('');
   const [cashier1, setCashier1] = useState<QueueItem[]>([]);
@@ -49,7 +51,7 @@ const PracticePageForm: React.FC = () => {
     const maxQueue = 3;
     const remaining = queue.length - maxQueue;
     if (queue.length <= 3){
-      return;
+      return null;
     }
     else if (remaining) {
       return `${remaining} more queue`  ;
@@ -63,18 +65,19 @@ const PracticePageForm: React.FC = () => {
       case 1:
         addToQueue(cashier1, setCashier1);
         break;
+      
       case 2:
         addToQueue(cashier2, setCashier2);
         break;
+
       case 3:
         addToQueue(cashier3, setCashier3);
         break;
+
       default:
         break;
     }
   };
-
- 
 
   return (
     <Space style={{display : "flex" }} direction='vertical' size={"middle"} >
@@ -96,6 +99,7 @@ const PracticePageForm: React.FC = () => {
             )}
           />
         </Col>
+
         <Col span={8}>
           <Table
             dataSource={cashier2.slice(0,3)}
@@ -128,8 +132,8 @@ const PracticePageForm: React.FC = () => {
             )}
           />
         </Col>
-      </Row>
 
+      </Row>
        <Row gutter={[5, 6]}>
         <Col span={8}>
           <Input
@@ -138,29 +142,29 @@ const PracticePageForm: React.FC = () => {
             onChange={e => setName(e.target.value)}
           />
         </Col>
+
          <Col span={8}>
-          <Button type="primary" onClick={submitToQueue} className = "bg-slate-500">
+          <Button type="primary" onClick={submitToQueue} className = "bg-green-500">
             Submit
           </Button>
         </Col>
       </Row>
+
       <Row>
         <Space direction= "vertical" size={"small"} style={{display: "flex"}}>
-        <Col span={8}>
-          <Button className = "bg-slate-500" type="primary" onClick={() => addToQueue(cashier1, setCashier1)}>
+        <Col span={8} className='flex gap-3'>
+          <Button className = "bg-green-500" type="primary" onClick={() => addToQueue(cashier1, setCashier1)}>
             Cashier 1
           </Button>
-          <Button className = "bg-slate-500"type="primary" onClick={() => addToQueue(cashier2, setCashier2)}>
+          <Button className = "bg-green-500"type="primary" onClick={() => addToQueue(cashier2, setCashier2)}>
             Cashier 2
           </Button>
-          <Button className = "bg-slate-500" type="primary" onClick={() => addToQueue(cashier3, setCashier3)}>
+          <Button className = "bg-green-500" type="primary" onClick={() => addToQueue(cashier3, setCashier3)}>
             Cashier 3
           </Button>
         </Col>
         </Space>
        </Row>
-      
-
     </Space>
   );
 };
