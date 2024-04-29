@@ -46,7 +46,7 @@
     "@hookform/resolvers": "3.0.1",
     "@tanstack/react-query": "5.29.2",
     "antd": "5.4.0",
-    "dayjs": "1.11.7",
+    "dayjs": "1.11.11",
     "http-proxy": "1.18.1",
     "jotai": "2.0.3",
     "next": "^13.5.6",
